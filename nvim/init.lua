@@ -1,3 +1,5 @@
+vim.opt.termguicolors = true
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -12,7 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "RRethy/nvim-base16", name = 'base16', priority = 1001, lazy = false },
 	{ 'effkay/argonaut.vim',
 		name = 'argonaut',
 		lazy = false,
@@ -66,6 +67,8 @@ require("lazy").setup({
 
 })
 
+vim.opt.termguicolors = true
+
 -- --------
 -- LUA LINE
 -- --------
@@ -76,7 +79,7 @@ end
 
 require('lualine').setup {
   options = {
-	theme = 'onedark',
+	theme = 'powerline_dark',
   	section_separators = '',
 	component_separators = '',
   },
@@ -95,14 +98,14 @@ require('lualine').setup {
   lualine_z = {}
   },
 
-inactive_winbar = {
-  lualine_a = { window },
-  lualine_b = {},
-  lualine_c = {'filename'},
-  lualine_x = {},
-  lualine_y = {},
-  lualine_z = {}
-},
+  inactive_winbar = {
+    lualine_a = { window },
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
 }
 
 -- ---------
@@ -117,8 +120,8 @@ require("mason-lspconfig").setup{
 
 require'lspconfig'.typst_lsp.setup{
 	settings = {
-		exportPdf = "onType" -- Choose onType, onSave or never.
-        -- serverPath = "" -- Normally, there is no need to uncomment it.
+      exportPdf = "onType" -- Choose onType, onSave or never.
+      -- serverPath = "" -- Normally, there is no need to uncomment it.
 	}
 }
 
@@ -205,25 +208,25 @@ cmp.setup({
 -- --------------------------
 
 local highlight = {
-    "RainbowRed",
-    "RainbowYellow",
-    "RainbowBlue",
-    "RainbowOrange",
-    "RainbowGreen",
-    "RainbowViolet",
-    "RainbowCyan",
+  "RainbowRed",
+  "RainbowYellow",
+  "RainbowBlue",
+  "RainbowOrange",
+  "RainbowGreen",
+  "RainbowViolet",
+  "RainbowCyan",
 }
 local hooks = require "ibl.hooks"
 -- create the highlight groups in the highlight setup hook, so they are reset
 -- every time the colorscheme changes
 hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+  vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#FF000F" })
+  vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#FFB900" })
+  vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#008DF8" })
+  vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#FF8308" })
+  vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#8CE10B" })
+  vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#6D43A6" })
+  vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#00D8EB" })
 end)
 
 vim.g.rainbow_delimiters = { highlight = highlight }
@@ -259,4 +262,5 @@ vim.cmd('set shiftwidth=4')
 vim.cmd('set expandtab')
 vim.cmd('ASToggle')
 
-
+-- Fix color issues preceeding text
+vim.cmd('highlight NonText ctermbg=NONE guibg=NONE')
