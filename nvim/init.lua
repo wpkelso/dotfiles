@@ -14,57 +14,69 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ 'effkay/argonaut.vim',
-		name = 'argonaut',
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd([[colorscheme argonaut]])
-		end,
-	},
-	{ 'kepano/flexoki-neovim',
-		name = 'flexoki',
-	},
-	{ 'echasnovski/mini.nvim', version = false },
-	{ 'hrsh7th/cmp-nvim-lsp',
-		'hrsh7th/cmp-buffer',
-		'hrsh7th/cmp-path',
-		'hrsh7th/cmp-cmdline',
-		'hrsh7th/nvim-cmp'
-	},
-	{ 'L3MON4D3/LuaSnip',
-		'saadparwaiz1/cmp_luasnip'
-	},
-	{ "nvim-lualine/lualine.nvim", lazy = false },
-	{ "nvim-tree/nvim-web-devicons" },
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-	{ "stevearc/dressing.nvim", event = "VeryLazy" },
-	{ "MunifTanjim/nui.nvim" },
-	{ "lukas-reineke/indent-blankline.nvim", main = "ibl" },
-	{ "folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-			}
-	},
-	{ "mfussenegger/nvim-lint" },
-	{ 'lewis6991/gitsigns.nvim', lazy = true },
-	{ "williamboman/mason.nvim",
-	  "williamboman/mason-lspconfig.nvim",
-	  "neovim/nvim-lspconfig",
-	  lazy = true
-	},
-	{ 'kaarmu/typst.vim', ft = 'typst', lazy=true,},
-	{ 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
-	{ 'pocco81/auto-save.nvim' },
-	{ 'HiPhish/rainbow-delimiters.nvim' },
-
+  { 'talha-akram/noctis.nvim',
+    name = 'noctis',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme noctis_obscuro]])
+    end,
+  },
+  { 'effkay/argonaut.vim',
+    name = 'argonaut',
+    --lazy = false,
+    --priority = 1000,
+    --config = function()
+    --  vim.cmd([[colorscheme argonaut]])
+    --end,
+  },
+  { 'kepano/flexoki-neovim',
+    name = 'flexoki',
+    --lazy = false,
+    --priority = 1000,
+    --config = function()
+    --  vim.cmd([[colorscheme flexoki-dark]])
+    --end,
+  },
+  { 'echasnovski/mini.nvim', version = false },
+  { 'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/nvim-cmp'
+  },
+  { 'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip'
+  },
+  { "nvim-lualine/lualine.nvim", lazy = false },
+  { "nvim-tree/nvim-web-devicons" },
+  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  { "stevearc/dressing.nvim", event = "VeryLazy" },
+  { "MunifTanjim/nui.nvim" },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
+  { "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+        vim.o.timeout = true
+        vim.o.timeoutlen = 300
+    end,
+    opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+        }
+  },
+  { "mfussenegger/nvim-lint" },
+  { 'lewis6991/gitsigns.nvim', lazy = true },
+  { "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+    lazy = true
+  },
+  { 'kaarmu/typst.vim', ft = 'typst', lazy=true,},
+  { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
+  { 'pocco81/auto-save.nvim' },
+  { 'HiPhish/rainbow-delimiters.nvim' },
 })
 
 vim.opt.termguicolors = true
@@ -206,6 +218,13 @@ cmp.setup({
 -- --------------------------
 -- Rainbow Delimiters and IBL
 -- --------------------------
+local red = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Red")), "fg#")', true)
+local yellow = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Yellow")), "fg#")', true)
+local blue = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Blue")), "fg#")', true)
+local orange = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Orange")), "fg#")', true)
+local green = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Green")), "fg#")', true)
+local violet = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Purple")), "fg#")', true)
+local cyan = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
 
 local highlight = {
   "RainbowRed",
@@ -220,13 +239,13 @@ local hooks = require "ibl.hooks"
 -- create the highlight groups in the highlight setup hook, so they are reset
 -- every time the colorscheme changes
 hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-  vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#FF000F" })
-  vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#FFB900" })
-  vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#008DF8" })
-  vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#FF8308" })
-  vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#8CE10B" })
-  vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#6D43A6" })
-  vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#00D8EB" })
+  vim.api.nvim_set_hl(0, "RainbowRed", { fg = red })
+  vim.api.nvim_set_hl(0, "RainbowYellow", { fg = yellow })
+  vim.api.nvim_set_hl(0, "RainbowBlue", { fg = blue })
+  vim.api.nvim_set_hl(0, "RainbowOrange", { fg = orange })
+  vim.api.nvim_set_hl(0, "RainbowGreen", { fg = green })
+  vim.api.nvim_set_hl(0, "RainbowViolet", { fg = violet })
+  vim.api.nvim_set_hl(0, "RainbowCyan", { fg = cyan })
 end)
 
 vim.g.rainbow_delimiters = { highlight = highlight }
