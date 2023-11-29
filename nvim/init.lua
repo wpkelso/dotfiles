@@ -1,3 +1,6 @@
+-- ----------- --
+-- NVIM CONFIG --
+-- ----------- --
 vim.opt.termguicolors = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -16,11 +19,11 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { 'talha-akram/noctis.nvim',
     name = 'noctis',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd([[colorscheme noctis_obscuro]])
-    end,
+    --lazy = false,
+    --priority = 1000,
+    --config = function()
+    --  vim.cmd([[colorscheme noctis_obscuro]])
+    --end,
   },
   { 'effkay/argonaut.vim',
     name = 'argonaut',
@@ -32,11 +35,11 @@ require("lazy").setup({
   },
   { 'kepano/flexoki-neovim',
     name = 'flexoki',
-    --lazy = false,
-    --priority = 1000,
-    --config = function()
-    --  vim.cmd([[colorscheme flexoki-dark]])
-    --end,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme flexoki-light]])
+    end,
   },
   { 'echasnovski/mini.nvim', version = false },
   { 'hrsh7th/cmp-nvim-lsp',
@@ -60,11 +63,7 @@ require("lazy").setup({
         vim.o.timeout = true
         vim.o.timeoutlen = 300
     end,
-    opts = {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-        }
+    opts = {}
   },
   { "mfussenegger/nvim-lint" },
   { 'lewis6991/gitsigns.nvim', lazy = true },
@@ -91,7 +90,7 @@ end
 
 require('lualine').setup {
   options = {
-	theme = 'powerline_dark',
+	theme = 'powerline',
   	section_separators = '',
 	component_separators = '',
   },
@@ -218,13 +217,24 @@ cmp.setup({
 -- --------------------------
 -- Rainbow Delimiters and IBL
 -- --------------------------
-local red = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Red")), "fg#")', true)
-local yellow = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Yellow")), "fg#")', true)
-local blue = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Blue")), "fg#")', true)
-local orange = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Orange")), "fg#")', true)
-local green = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Green")), "fg#")', true)
-local violet = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Purple")), "fg#")', true)
-local cyan = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
+
+-- Dynamic pulling of colors
+--local red = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Red")), "fg#")', true)
+--local yellow = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Yellow")), "fg#")', true)
+--local blue = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Blue")), "fg#")', true)
+--local orange = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Orange")), "fg#")', true)
+--local green = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Green")), "fg#")', true)
+--local violet = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Purple")), "fg#")', true)
+--local cyan = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
+
+-- Static colors (Flexoki-Light)
+local red = '#af3029'
+local yellow = '#bc5215'
+local blue = '#205ea6'
+local orange = '#bc5215'
+local green = '#66800b'
+local violet = '#5e409d'
+local cyan = '#24837b'
 
 local highlight = {
   "RainbowRed",
@@ -281,5 +291,7 @@ vim.cmd('set shiftwidth=4')
 vim.cmd('set expandtab')
 vim.cmd('ASToggle')
 
--- Fix color issues preceeding text
-vim.cmd('highlight NonText ctermbg=NONE guibg=NONE')
+-- Fix for color issues preceeding text on dark backgrounds
+if vim.o.background == 'dark' then
+    vim.cmd('highlight NonText ctermbg=NONE guibg=NONE')
+end
