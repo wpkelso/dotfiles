@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   { 'talha-akram/noctis.nvim',
-    name = 'noctis',
+    name = 'notcis',
     --lazy = false,
     --priority = 1000,
     --config = function()
@@ -27,19 +27,19 @@ require("lazy").setup({
   },
   { 'effkay/argonaut.vim',
     name = 'argonaut',
-    --lazy = false,
-    --priority = 1000,
-    --config = function()
-    --  vim.cmd([[colorscheme argonaut]])
-    --end,
-  },
-  { 'kepano/flexoki-neovim',
-    name = 'flexoki',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme flexoki-light]])
+      vim.cmd([[colorscheme argonaut]])
     end,
+  },
+  { 'kepano/flexoki-neovim',
+    name = flexoki,
+    --lazy = false,
+    --priority = 1000,
+    --config = function()
+    --  vim.cmd([[colorscheme flexoki-light]])
+    --end,
   },
   { 'echasnovski/mini.nvim', version = false },
   { 'hrsh7th/cmp-nvim-lsp',
@@ -77,8 +77,6 @@ require("lazy").setup({
   { 'pocco81/auto-save.nvim' },
   { 'HiPhish/rainbow-delimiters.nvim' },
 })
-
-vim.opt.termguicolors = true
 
 -- --------
 -- LUA LINE
@@ -228,13 +226,24 @@ cmp.setup({
 --local cyan = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
 
 -- Static colors (Flexoki-Light)
-local red = '#af3029'
-local yellow = '#bc5215'
-local blue = '#205ea6'
-local orange = '#bc5215'
-local green = '#66800b'
-local violet = '#5e409d'
-local cyan = '#24837b'
+--local red = '#af3029'
+--local yellow = '#bc5215'
+--local blue = '#205ea6'
+--local orange = '#bc5215'
+--local green = '#66800b'
+--local violet = '#5e409d'
+--local cyan = '#24837b'
+
+-- Static colors (Argonaut+)
+local red = '#ff000f'
+local yellow = '#ffb900'
+local blue = '#008df8'
+local orange = '#f2860d'
+local green = '#8ce10b'
+local violet = '#6d43a6'
+local cyan = '#00d8eb'
+
+
 
 local highlight = {
   "RainbowRed",
@@ -270,6 +279,11 @@ hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_ex
 require('auto-save').setup {
 	enabled = false
 }
+
+-- -------------
+-- TYPST OPTIONS
+-- -------------
+vim.g.typst_pdf_viewer = zathura
 
 -- ------------
 -- AUTO PAIRING
