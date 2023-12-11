@@ -27,19 +27,28 @@ require("lazy").setup({
   },
   { 'effkay/argonaut.vim',
     name = 'argonaut',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd([[colorscheme argonaut]])
-    end,
+    --lazy = false,
+    --priority = 1000,
+    --config = function()
+    --  vim.cmd([[colorscheme argonaut]])
+    --end,
   },
   { 'kepano/flexoki-neovim',
-    name = flexoki,
+    name = 'flexoki',
     --lazy = false,
     --priority = 1000,
     --config = function()
     --  vim.cmd([[colorscheme flexoki-light]])
     --end,
+  },
+  { --'wpkelso/argonoct-neovim',
+    dir = '~/Documents/argonoct-neovim/',
+    name = 'argonoct',
+    lazy=false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme argonoct-dark]])
+    end,
   },
   { 'echasnovski/mini.nvim', version = false },
   { 'hrsh7th/cmp-nvim-lsp',
@@ -49,7 +58,12 @@ require("lazy").setup({
     'hrsh7th/nvim-cmp'
   },
   { 'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip'
+    'saadparwaiz1/cmp_luasnip',
+    lazy = false,
+    dependencies = {
+      "kmarius/jsregexp",
+      build = "make install_jsregexp",
+    },
   },
   { "nvim-lualine/lualine.nvim", lazy = false },
   { "nvim-tree/nvim-web-devicons" },
@@ -226,22 +240,22 @@ cmp.setup({
 --local cyan = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
 
 -- Static colors (Flexoki-Light)
---local red = '#af3029'
---local yellow = '#bc5215'
---local blue = '#205ea6'
---local orange = '#bc5215'
---local green = '#66800b'
---local violet = '#5e409d'
---local cyan = '#24837b'
+local red = '#af3029'
+local yellow = '#bc5215'
+local blue = '#205ea6'
+local orange = '#bc5215'
+local green = '#66800b'
+local violet = '#5e409d'
+local cyan = '#24837b'
 
 -- Static colors (Argonaut+)
-local red = '#ff000f'
-local yellow = '#ffb900'
-local blue = '#008df8'
-local orange = '#f2860d'
-local green = '#8ce10b'
-local violet = '#6d43a6'
-local cyan = '#00d8eb'
+--local red = '#ff000f'
+--local yellow = '#ffb900'
+--local blue = '#008df8'
+--local orange = '#f2860d'
+--local green = '#8ce10b'
+--local violet = '#6d43a6'
+--local cyan = '#00d8eb'
 
 
 
@@ -291,7 +305,11 @@ vim.g.typst_pdf_viewer = zathura
 
 local Rule = require('nvim-autopairs.rule')
 local npairs = require('nvim-autopairs')
+-- typst rules
 npairs.add_rule(Rule("$","$","typst"))
+-- markdown rules
+npairs.add_rule(Rule("*", "*", "markdown"))
+npairs.add_rule(Rule("_", "_", "markdown"))
 
 -- Making sure EditorConfig support is enabled
 vim.g.editorconfig = true
