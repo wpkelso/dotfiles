@@ -1,0 +1,35 @@
+import = [
+    "/home/wkelso/.config/alacritty/themes/argonaut-dark.toml",
+    "/home/wkelso/.config/alacritty/fonts/0xProto.toml"
+    ]
+live_config_reload = true
+
+[shell]
+program = "tmux"
+
+[cursor]
+unfocused_hollow = true
+
+[cursor.style]
+blinking = "Off"
+shape = "Block"
+
+[scrolling]
+history = 10000
+multiplier = 1
+
+[selection]
+save_to_clipboard = true
+
+[window]
+dimensions = { columns = 80, lines = 28 }
+decorations = "full"
+dynamic_title = false
+opacity = 1.0
+resize_increments = true
+startup_mode = "Windowed"
+title = "Alacritty"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"

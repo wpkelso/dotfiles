@@ -1,0 +1,47 @@
+colors:
+  # Default colors
+  primary:
+    background: "#FFFAF4"
+    foreground: "#0E1019"
+
+    dim_foreground: "#0E1019"
+    bright_foreground: "#0E1019"
+    dim_background: "#FFFAF4"
+    bright_background: "#FFFAF4"
+
+  # Cursor colors
+  cursor:
+    text: CellBackground
+    cursor: CellForeground
+
+  # Normal colors
+  normal:
+    black: "#232323"
+    red: "#D61F17"
+    green: "#4C7E00"
+    yellow: "#C78600"
+    blue: "#056DBC"
+    magenta: "#6D43A6"
+    cyan: "#02ADBD"
+    white: "#FFFFFF"
+  # Bright colors
+  bright:
+    black: "#5A5A5A"
+    red: "#EA0715"
+    green: "#81CC0F"
+    yellow: "#ECAE0A"
+    blue: "#0213E5"
+    magenta: "#8951D6"
+    cyan: "#03D0E2"
+    white: "#FFFFFF"
+  # Dim colors
+  dim:
+    black: "#232323"
+    red: "#D61F17"
+    green: "#4C7E00"
+    yellow: "#C78600"
+    blue: "#056DBC"
+    magenta: "#6D43A6"
+    cyan: "#02ADBD"
+    white: "#FFFFFF"
+
