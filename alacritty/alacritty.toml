@@ -22,7 +22,7 @@ multiplier = 1
 save_to_clipboard = true
 
 [window]
-dimensions = { columns = 80, lines = 28 }
+dimensions = { columns = 80, lines = 30 }
 decorations = "full"
 dynamic_title = false
 opacity = 1.0

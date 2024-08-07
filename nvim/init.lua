@@ -16,39 +16,15 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-  require("lazy").setup({
-      { 'talha-akram/noctis.nvim',
-      name = 'notcis',
-      --lazy = false,
-      --priority = 1000,
-      --config = function()
-      --  vim.cmd([[colorscheme noctis_obscuro]])
-      --end,
-  },
-  { 'effkay/argonaut.vim',
-    name = 'argonaut',
-    --lazy = false,
-    --priority = 1000,
-    --config = function()
-    --  vim.cmd([[colorscheme argonaut]])
-    --end,
-  },
-  { 'kepano/flexoki-neovim',
-    name = 'flexoki',
-    --lazy = false,
-    --priority = 1000,
-    --config = function()
-    --  vim.cmd([[colorscheme flexoki-light]])
-    --end,
-  },
+require("lazy").setup({
   { --'wpkelso/argonoct-neovim',
-      dir = '~/Documents/argonoct-neovim/',
-      name = 'argonoct',
-      lazy=false,
-      priority = 1000,
-      config = function()
-          vim.cmd([[colorscheme argonoct-dark]])
-      end,
+    dir = '~/Documents/argonoct-neovim/',
+    name = 'argonoct',
+    lazy=false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme argonoct-dark]])
+    end,
   },
   { 'echasnovski/mini.nvim', version = false },
   { 'hrsh7th/cmp-nvim-lsp',
@@ -61,16 +37,45 @@ vim.opt.rtp:prepend(lazypath)
     'saadparwaiz1/cmp_luasnip',
     lazy = false,
     dependencies = {
-        "kmarius/jsregexp",
-        build = "make install_jsregexp",
+      "kmarius/jsregexp",
+      build = "make install_jsregexp",
     },
   },
   { "nvim-lualine/lualine.nvim", lazy = false },
   { "nvim-tree/nvim-web-devicons" },
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", lazy = false },
+  { "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function ()
+      require('nvim-treesitter.configs').setup({
+        auto_install = true,
+        ensure_installed = {
+          "lua",
+          "toml",
+          "css",
+          "html",
+          "lua",
+          "rust",
+          "c",
+        },
+        highlight = {
+          enable = true,
+          use_languagetree = true,
+        },
+        indent = { enable = true },
+      })
+    end,
+    lazy = false,
+  },
+  { 'windwp/nvim-ts-autotag',
+    config = function ()
+      require('nvim-ts-autotag').setup({
+        filetypes = { 'html', 'css', 'markdown', 'xml' }
+      })
+    end,
+  },
   { "stevearc/dressing.nvim", event = "VeryLazy" },
   { "MunifTanjim/nui.nvim" },
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
+  -- { "lukas-reineke/indent-blankline.nvim", main = "ibl", version = "3.6", opts = {} },
   { "folke/which-key.nvim",
     event = "VeryLazy",
     init = function()
@@ -78,20 +83,20 @@ vim.opt.rtp:prepend(lazypath)
       vim.o.timeoutlen = 300
     end,
     opts = {}
-      },
-      { "mfussenegger/nvim-lint" },
-      { 'lewis6991/gitsigns.nvim', lazy = true },
-      { "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
-      lazy = true
+  },
+  { "mfussenegger/nvim-lint" },
+  { 'lewis6991/gitsigns.nvim', lazy = true },
+  { "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+    lazy = true
   },
   { 'kaarmu/typst.vim', ft = 'typst', lazy=true,},
   { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
-  { 'pocco81/auto-save.nvim' },
   { 'HiPhish/rainbow-delimiters.nvim' },
   { 'FluxxField/bionic-reading.nvim', opts = {} },
-  {"folke/trouble.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {}},
+  { 'folke/trouble.nvim', dependencies = { "nvim-tree/nvim-web-devicons" }, opts = {}},
+  { 'mrcjkb/rustaceanvim', version = '^5', lazy = false,},
 })
 
 -- --------
@@ -142,7 +147,7 @@ vim.cmd('colorscheme argonoct-dark') --fix for lualine causing some weirdness
 require('gitsigns').setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  ensure_installed = { "clangd", "lua_ls", "pylsp", "rust_analyzer", "taplo", "typst_lsp", "cssls", "html" },
+  ensure_installed = { "clangd", "lua_ls", "pylsp", "taplo", "typst_lsp", "cssls", "html" },
 }
 
 require'lspconfig'.typst_lsp.setup{
@@ -158,12 +163,45 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+-- ------------
+-- AUTO PAIRING
+-- ------------
+require('nvim-autopairs').setup({
+  enable_check_bracket_line = true
+})
+
+require('nvim-autopairs').enable()
+
+local Rule = require('nvim-autopairs.rule')
+local npairs = require('nvim-autopairs')
+-- typst rules
+npairs.add_rule(Rule("$","$","typst"))
+-- markdown rules
+npairs.add_rule(Rule("*", "*", "markdown"))
+npairs.add_rule(Rule("_", "_", "markdown"))
+
+-- ------------
+-- HTML AUTOTAG
+-- ------------
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  {
+    underline = true,
+    virtual_text = {
+      spacing = 5,
+      severity_limit = 'Warning',
+    },
+    update_in_insert = true,
+  }
+)
+
 -- -------------------
 -- NVIM CMP (LUA SNIP)
 -- -------------------
 
 local luasnip = require("luasnip")
 local cmp = require("cmp")
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 cmp.setup({
   snippet = {
@@ -204,9 +242,14 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'luasnip' }, -- For luasnip users.
   }, {
-    { name = 'buffer' },
-  })
+      { name = 'buffer' },
+    })
 })
+
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -219,9 +262,6 @@ require('lspconfig')["lua_ls"].setup {
 require('lspconfig')["pylsp"].setup {
   capabilities = capabilities
 }
-require('lspconfig')["rust_analyzer"].setup {
-  capabilities = capabilities
-}
 require('lspconfig')["taplo"].setup {
   capabilities = capabilities
 }
@@ -231,120 +271,98 @@ require('lspconfig')["typst_lsp"].setup {
 require('lspconfig')["cssls"].setup {
   capabilities = capabilities
 }
---require('lspconfig')["html"].setup {
-  --    capabilities = capabilities
-  --}
+require('lspconfig')["biome"].setup {
+  capabilities = capabilities
+}
+require('lspconfig')["html"].setup {
+  capabilities = capabilities
+}
 
-  -- --------------------------
-  -- Rainbow Delimiters and IBL
-  -- --------------------------
+-- --------------------------
+-- Rainbow Delimiters and IBL
+-- --------------------------
 
-  -- Dynamic pulling of colors
-  local red    = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Red")), "fg#")', true)
-  local yellow = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Yellow")), "fg#")', true)
-  local blue   = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Blue")), "fg#")', true)
-  local orange = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Orange")), "fg#")', true)
-  local green  = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Green")), "fg#")', true)
-  local violet = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Purple")), "fg#")', true)
-  local cyan   = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
+-- Dynamic pulling of colors, works only with themes that set these specific groups
+local red    = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Red")), "fg#")', true)
+local yellow = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Yellow")), "fg#")', true)
+local blue   = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Blue")), "fg#")', true)
+local orange = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Orange")), "fg#")', true)
+local green  = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Green")), "fg#")', true)
+local violet = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Purple")), "fg#")', true)
+local cyan   = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
 
-  -- Static colors (Argonaut)
-  --local red = '#ff000f'
-  --local yellow = '#ffb900'
-  --local blue = '#008df8'
-  --local orange = '#f2860d'
-  --local green = '#8ce10b'
-  --local violet = '#6d43a6'
-  --local cyan = '#00d8eb'
+local highlight = {
+  "RainbowRed",
+  "RainbowYellow",
+  "RainbowBlue",
+  "RainbowOrange",
+  "RainbowGreen",
+  "RainbowViolet",
+  "RainbowCyan",
+}
 
-  local highlight = {
-    "RainbowRed",
-    "RainbowYellow",
-    "RainbowBlue",
-    "RainbowOrange",
-    "RainbowGreen",
-    "RainbowViolet",
-    "RainbowCyan",
+--temporarily setting up highlight groups separate from ibl because it broke
+vim.api.nvim_set_hl(0, "RainbowRed",    { fg = red })
+vim.api.nvim_set_hl(0, "RainbowYellow", { fg = yellow })
+vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = blue })
+vim.api.nvim_set_hl(0, "RainbowOrange", { fg = orange })
+vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = green })
+vim.api.nvim_set_hl(0, "RainbowViolet", { fg = violet })
+vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = cyan })
+
+--  local hooks = require "ibl.hooks"
+--  -- create the highlight groups in the highlight setup hook, so they are reset
+--  -- every time the colorscheme changes
+--  hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+--    vim.api.nvim_set_hl(0, "RainbowRed",    { fg = red })
+--    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = yellow })
+--    vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = blue })
+--    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = orange })
+--    vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = green })
+--    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = violet })
+--    vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = cyan })
+--  end)
+--
+vim.g.rainbow_delimiters = { highlight = highlight }
+--  require("ibl").setup { scope = { highlight = highlight } } --rainbow_delimiters.nvim integration
+--  require("ibl").setup()
+--
+--  hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+
+
+
+-- ---------
+-- MINI.NVIM
+-- ---------
+require('mini.surround').setup()
+require('mini.comment').setup()
+require('mini.align').setup()
+
+
+
+-- ---------
+-- Rustacean
+-- ---------
+vim.g.rustaceanvim = {
+  tools = {
+
   }
-  local hooks = require "ibl.hooks"
-  -- create the highlight groups in the highlight setup hook, so they are reset
-  -- every time the colorscheme changes
-  hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-    vim.api.nvim_set_hl(0, "RainbowRed",    { fg = red })
-    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = yellow })
-    vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = blue })
-    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = orange })
-    vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = green })
-    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = violet })
-    vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = cyan })
-  end)
-
-  vim.g.rainbow_delimiters = { highlight = highlight }
-  require("ibl").setup { scope = { highlight = highlight } }
-
-  hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+}
 
 
-  -- ---------
-  -- AUTO SAVE
-  -- ---------
-  require('auto-save').setup {
-    enabled = false
-  }
+-- Enabling line numbering
+vim.cmd('set number')
+vim.cmd('set relativenumber')
+vim.cmd('set laststatus=3')
+vim.cmd('set tabstop=4')
+vim.cmd('set shiftwidth=4')
+vim.cmd('set expandtab')
 
-  -- ---------
-  -- MINI.NVIM
-  -- ---------
-  require('mini.surround').setup()
-  require('mini.comment').setup()
-  require('mini.align').setup()
-  -- require('mini.move').setup() --Disabled because it was getting annoying it, but unsure as to whether or not I actually want to remove it
+-- Fix for color issues preceeding text on dark backgrounds
+if vim.o.background == 'dark' then
+  vim.cmd('highlight NonText ctermbg=NONE guibg=NONE')
+end
 
-  -- ------------
-  -- AUTO PAIRING
-  -- ------------
+-- Making sure EditorConfig support is enabled
+vim.g.editorconfig = true
 
-  local Rule = require('nvim-autopairs.rule')
-  local npairs = require('nvim-autopairs')
-  -- typst rules
-  npairs.add_rule(Rule("$","$","typst"))
-  -- markdown rules
-  npairs.add_rule(Rule("*", "*", "markdown"))
-  npairs.add_rule(Rule("_", "_", "markdown"))
-  -- html rules
-  npairs.add_rules({
-    Rule("<html%s>$", "</html>", "html")
-    :use_regex(true)
-  })
-  npairs.add_rules({
-    Rule("<head%s>$", "</head>", "html")
-  })
-  npairs.add_rules({
-    Rule("<body%s>$", "</body>", "html")
-    :use_regex(true)
-  })
-  npairs.add_rules({
-    Rule("<div%s>$", "</div>", "html")
-    :use_regex(true)
-  })
-  npairs.add_rules({
-    Rule("<a%s>$", "</a>", "html")
-    :use_regex(true)
-  })
-
-  -- Making sure EditorConfig support is enabled
-  vim.g.editorconfig = true
-
-  -- Enabling line numbering
-  vim.cmd('set number')
-  vim.cmd('set relativenumber')
-  vim.cmd('set laststatus=3')
-  vim.cmd('set tabstop=4')
-  vim.cmd('set shiftwidth=4')
-  vim.cmd('set expandtab')
-  vim.cmd('ASToggle')
-
-  -- Fix for color issues preceeding text on dark backgrounds
-  if vim.o.background == 'dark' then
-    vim.cmd('highlight NonText ctermbg=NONE guibg=NONE')
-  end
