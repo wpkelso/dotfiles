@@ -1,5 +1,6 @@
 import = [
-    "/home/wkelso/.config/alacritty/themes/argonaut-dark.toml",
+    #"/home/wkelso/.config/alacritty/themes/argonox.toml",
+    "/home/wkelso/.config/alacritty/themes/argolux.toml",
     "/home/wkelso/.config/alacritty/fonts/0xProto.toml"
     ]
 live_config_reload = true

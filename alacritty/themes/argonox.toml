@@ -1,0 +1,42 @@
+[window]
+decorations_theme_variant = "Dark"
+
+[colors.bright]
+black = "#444444"
+blue = "#0092FF"
+cyan = "#67FFF0"
+green = "#ABE15B"
+magenta = "#9A5FEB"
+red = "#FF2740"
+white = "#FFFFFF"
+yellow = "#FFD242"
+
+[colors.cursor]
+cursor = "CellForeground"
+text = "CellBackground"
+
+[colors.dim]
+black = "#232323"
+blue = "#008DF8"
+cyan = "#00D8EB"
+green = "#8CE10B"
+magenta = "#6D43A6"
+red = "#FF000F"
+white = "#FFFAF4"
+yellow = "#FFB900"
+
+[colors.normal]
+black = "#232323"
+blue = "#008DF8"
+cyan = "#00D8EB"
+green = "#8CE10B"
+magenta = "#6D43A6"
+red = "#FF000F"
+white = "#FFFAF4"
+yellow = "#FFB900"
+
+[colors.primary]
+background = "#0E1019"
+bright_foreground = "#FFFAF4"
+dim_foreground = "#FFFAF4"
+foreground = "#FFFAF4"

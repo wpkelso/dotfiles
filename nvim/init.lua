@@ -23,7 +23,7 @@ require("lazy").setup({
     lazy=false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme argonoct-dark]])
+      vim.cmd([[colorscheme argolux]])
     end,
   },
   { 'echasnovski/mini.nvim', version = false },
@@ -109,8 +109,8 @@ end
 
 require('lualine').setup {
   options = {
-    theme = 'argonoct-dark-pwrln',
-    section_separators = { left = '', right = '' },
+    theme = 'argonoct-pwrln',
+    section_separators = { left = '▒', right = '▒' },
     component_separators = { left = '', right = '' },
   },
   sections = {
@@ -138,7 +138,7 @@ require('lualine').setup {
   },
 }
 
-vim.cmd('colorscheme argonoct-dark') --fix for lualine causing some weirdness
+vim.cmd('colorscheme argolux') --fix for lualine causing some weirdness
 
 -- ---------
 -- LSP SETUP
@@ -353,8 +353,7 @@ vim.g.rustaceanvim = {
 -- Enabling line numbering
 vim.cmd('set number')
 vim.cmd('set relativenumber')
-vim.cmd('set laststatus=3')
-vim.cmd('set tabstop=4')
+vim.opt.laststatus = 3
 vim.cmd('set shiftwidth=4')
 vim.cmd('set expandtab')
 
