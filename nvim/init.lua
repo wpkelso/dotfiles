@@ -89,7 +89,7 @@ require("lazy").setup({
   { "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    lazy = true
+    lazy = true,
   },
   { 'kaarmu/typst.vim', ft = 'typst', lazy=true,},
   { 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
@@ -138,24 +138,18 @@ require('lualine').setup {
   },
 }
 
-vim.cmd('colorscheme argolux') --fix for lualine causing some weirdness
+vim.cmd('colorscheme argonox') --fix for lualine causing some weirdness
 
 -- ---------
 -- LSP SETUP
 -- ---------
-
 require('gitsigns').setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  ensure_installed = { "clangd", "lua_ls", "pylsp", "taplo", "typst_lsp", "cssls", "html" },
+  ensure_installed = { "clangd", "lua_ls", "pylsp", "taplo", "tinymist", "cssls", "html" },
 }
 
-require'lspconfig'.typst_lsp.setup{
-  settings = {
-    exportPdf = "onSave" -- Choose onType, onSave or never.
-    -- serverPath = "" -- Normally, there is no need to uncomment it.
-  }
-}
+require'lspconfig'.tinymist.setup{}
 
 local has_words_before = function()
   unpack = unpack or table.unpack

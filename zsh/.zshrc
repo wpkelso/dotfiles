@@ -124,3 +124,5 @@ alias sld="sl"
 alias slt="sl"
 alias sls="sl"
 alias slla="sl"
+
+export GPG_TTY=$(tty)

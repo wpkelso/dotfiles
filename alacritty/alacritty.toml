@@ -1,11 +1,11 @@
-import = [
-    #"/home/wkelso/.config/alacritty/themes/argonox.toml",
-    "/home/wkelso/.config/alacritty/themes/argolux.toml",
+general.import = [
+    "/home/wkelso/.config/alacritty/themes/argonox.toml",
+    #"/home/wkelso/.config/alacritty/themes/argolux.toml",
     "/home/wkelso/.config/alacritty/fonts/0xProto.toml"
     ]
-live_config_reload = true
+general.live_config_reload = true
 
-[shell]
+[terminal.shell]
 program = "tmux"
 
 [cursor]
@@ -25,11 +25,11 @@ save_to_clipboard = true
 [window]
 dimensions = { columns = 80, lines = 30 }
 decorations = "full"
-dynamic_title = false
+dynamic_title = true
 opacity = 1.0
 resize_increments = true
 startup_mode = "Windowed"
-title = "Alacritty"
+#title = "Alacritty"
 
 [window.class]
 general = "Alacritty"
