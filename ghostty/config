@@ -1,0 +1,25 @@
+font-family = 0xProto Nerd Font
+font-feature = ss01
+font-size = 14
+
+cursor-style = block
+
+mouse-hide-while-typing = true
+
+command = /usr/bin/tmux
+title = "Ghostty"
+
+window-theme = auto
+window-height = 35
+window-width = 80
+window-step-resize = true
+
+copy-on-select = true
+
+shell-integration = zsh
+shell-integration-features = no-cursor 
+
+desktop-notifications = true
+
+theme = light:argolux, dark:argonox
+bold-is-bright = false

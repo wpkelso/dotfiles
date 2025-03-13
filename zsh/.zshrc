@@ -94,9 +94,8 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Brew Package Manager
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Start with tmux, allow for exiting to normal shell
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
@@ -126,3 +125,6 @@ alias sls="sl"
 alias slla="sl"
 
 export GPG_TTY=$(tty)
+export PATH="$PATH:$HOME/.local/share/dart-sass"
+export PATH="$PATH:$HOME/.local/share/zig"
+export PATH="$PATH:$HOME/.local/bin"
