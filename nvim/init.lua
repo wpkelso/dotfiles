@@ -41,7 +41,7 @@ config = function ()
 local configs = require("nvim-treesitter.configs")
 
 configs.setup({
-ensure_installed = {"c", "lua", "rust", "html", "css", "javascript"},
+ensure_installed = {"c", "lua", "rust", "html", "css", "javascript", "vala"},
 sync_install = false,
 highlight = { enable = true, use_languagetree = true },
 indent = {enable = true},
@@ -50,7 +50,9 @@ end,
 },
 
 -- NVIM UI/UX
-{ 'wpkelso/argonoct-neovim',
+{ 
+--'wpkelso/argonoct-neovim',
+dir         = '/home/wpkelso/Documents/argonoct-neovim/',
 name        = 'argonoct',
 lazy        = false,
 priority    = 1000, -- load as early as possible
@@ -82,7 +84,6 @@ dependencies = {
 }, 
 opts = {}
 },
-{ 'HiPhish/rainbow-delimiters.nvim' },
 
 { 'kaarmu/typst.vim', ft = 'typst', lazy=true,},
 { 'terrastruct/d2-vim' },
@@ -167,15 +168,10 @@ lualine_z = {}
 },
 }
 
-vim.cmd('colorscheme argonox') --set theme, fix for lualine causing some weirdness
-
-
 -- ---------
 -- LSP SETUP
 -- ---------
 require('gitsigns').setup()
-
-local lspconfig = require'lspconfig'
 
 local on_attach = function(client)
 require'completion'.on_attach(client)
@@ -215,7 +211,7 @@ vim.wo.signcolumn = "yes"
 
 end
 
-lspconfig.rust_analyzer.setup({
+vim.lsp.config('rust_analyzer', {
 on_attach = function(client, bufnr)
 vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end,
@@ -242,9 +238,9 @@ command = "clippy",
 }
 })
 
-require'lspconfig'.vala_ls.setup{}
+vim.lsp.config('vala_ls', {})
 
-require'lspconfig'.pylsp.setup{}
+vim.lsp.config('pylsp', {})
 
 --- ---------
 -- TREESITTER
@@ -279,12 +275,12 @@ vim.filetype.add({
 require('lint').linters_by_ft = {
 cpp = {'cpplint'},
 py = {'pylint'},
-Vala = {'vala-lint'},
+Vala = {'vala_lint'},
 lua = {'luacheck'},
 }
 
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
 group = lint_augroup,
 callback = function()
 require("lint").try_lint()
@@ -297,9 +293,21 @@ end,
 require('mini.indentscope').setup()
 require('mini.align').setup()
 require('mini.icons').setup()
+require('mini.snippets').setup()
 require('mini.completion').setup()
 require('mini.move').setup()
 require('mini.splitjoin').setup()
+
+_G.cr_action = function()
+-- If there is selected item in popup, accept it with <C-y>
+if vim.fn.complete_info()['selected'] ~= -1 then return '\25' end
+-- Fall back to plain `<CR>`. You might want to customize according
+-- to other plugins. For example if 'mini.pairs' is set up, replace
+-- next line with `return MiniPairs.cr()`
+return '\r'
+end
+
+vim.keymap.set('i', '<CR>', 'v:lua.cr_action()', { expr = true })
 
 
 -- ------------
@@ -334,38 +342,4 @@ severity_limit = 'Warning',
 update_in_insert = true,
 }
 )
-
-
--- --------------------------
--- Rainbow Delimiters and IBL
--- --------------------------
-
--- Dynamic pulling of colors, works only with themes that set these specific groups
-local red    = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Red")), "fg#")', true)
-local yellow = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Yellow")), "fg#")', true)
-local blue   = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Blue")), "fg#")', true)
-local orange = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Orange")), "fg#")', true)
-local green  = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Green")), "fg#")', true)
-local violet = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Purple")), "fg#")', true)
-local cyan   = vim.api.nvim_exec('echo synIDattr(synIDtrans(hlID("Cyan")), "fg#")', true)
-
-local highlight = {
-"RainbowRed",
-"RainbowYellow",
-"RainbowBlue",
-"RainbowOrange",
-"RainbowGreen",
-"RainbowViolet",
-"RainbowCyan",
-}
-
-vim.api.nvim_set_hl(0, "RainbowRed",    { fg = red })
-vim.api.nvim_set_hl(0, "RainbowYellow", { fg = yellow })
-vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = blue })
-vim.api.nvim_set_hl(0, "RainbowOrange", { fg = orange })
-vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = green })
-vim.api.nvim_set_hl(0, "RainbowViolet", { fg = violet })
-vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = cyan })
-vim.g.rainbow_delimiters = { highlight = highlight }
-
 
