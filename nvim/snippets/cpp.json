@@ -1,0 +1,14 @@
+{
+    "Include Guard": {
+        "prefix": ["include-guard"],
+        "body": [
+            "#ifndef __${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H__",
+            "#define __${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H__",
+            "",
+            "$0",
+            "",
+            "#endif //__${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H__"
+        ],
+        "description": "Include guard for C and C++ header files."
+    }
+}

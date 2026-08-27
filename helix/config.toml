@@ -1,0 +1,124 @@
+theme = "agelaius_nox"
+
+[editor]
+editor-config = true
+atomic-save = true
+mouse = true
+
+default-yank-register = "\""
+middle-click-paste = false
+
+scrolloff = 4
+scroll-lines = 3
+text-width = 100
+
+bufferline = "always"
+color-modes = true
+popup-border = "menu"
+line-number = "relative"
+cursorline = false
+cursorcolumn = false
+
+auto-completion = true
+path-completion = true
+preview-completion-insert = false
+completion-trigger-len = 2
+completion-replace = true
+
+auto-format = false
+idle-timeout = 250
+completion-timeout = 100
+
+default-line-ending = "lf"
+insert-final-newline = true
+trim-final-newlines = false
+trim-trailing-whitespace = true
+
+indent-heuristic = "hybrid"
+continue-comments = false
+
+end-of-line-diagnostics = "disable"
+
+[editor.statusline]
+left = ["mode", "file-name", "read-only-indicator", "file-modification-indicator", "version-control"]
+center = []
+right = ["spinner", "diagnostics", "spacer", "separator", "position", "position-percentage", "spacer"]
+
+separator = ""
+
+mode.normal = "NOR"
+mode.insert = "INS"
+mode.select = "SEL"
+
+diagnostics = ["info", "warning", "error"]
+workspace-diagnostics = ["warning", "error"]
+
+[editor.lsp]
+enable = true
+
+display-messages = true
+display-progress-messages = false
+display-inlay-hints = false
+display-color-swatches = false
+display-signature-help-docs = true
+
+auto-signature-help = true
+snippets = true
+goto-reference-include-declaration = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+follow-symlinks = true
+deduplicate-links = true
+parents = true
+ignore = true
+
+git-ignore = true
+git-global = true
+git-exclude = true
+
+[editor.whitespace]
+render = "none"
+
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+nnbsp = "␣"
+tab = "⇥"
+newline = "⏎"
+tabpad = "·"
+
+[editor.indent-guides]
+render = true
+character = "┆"
+skip-levels = 0
+
+[editor.gutters]
+layout = ["diagnostics", "line-numbers", "spacer", "diff"]
+
+[editor.gutters.line-numbers]
+min-width = 3
+
+[editor.soft-wrap]
+enable = true
+max-wrap = 20
+max-indent-retain = 40
+wrap-indicator = "↪"
+wrap-at-text-width = false
+
+[editor.smart-tab]
+enable = true
+supersede-menu = true
+
+[editor.inline-diagnostics]
+cursor-line = "disable"
+other-lines = "disable"
+prefix-len = 1
+max-wrap = 20
+max-diagnostics = 10
+

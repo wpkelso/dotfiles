@@ -1,0 +1,13 @@
+diff --git a/powerline.theme b/powerline.theme
+index 35b4d34..abcd0c4
+--- a/powerline.theme
++++ b/powerline.theme
+@@ -367,7 +367,7 @@ __powerline_end_terminator() {
+     local first_section="true"
+     __powerline_section_arrow -1
+     lp_terminal_format -1
+-    powerline_sections+="${section_arrow}${lp_terminal_format}${POWERLINE_SPACER}"
++    powerline_sections+="${section_arrow}${lp_terminal_format}${POWERLINE_SPACER}\n\$ "
+ }
+
+ __powerline_section_arrow() {  # _, background_color, _, _, _, fallback_background_color
