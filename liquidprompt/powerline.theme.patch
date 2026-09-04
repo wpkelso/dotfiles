@@ -1,13 +1,33 @@
 diff --git a/powerline.theme b/powerline.theme
-index 35b4d34..abcd0c4
+old mode 100644
+new mode 100755
+index 35b4d34..aedfab1
 --- a/powerline.theme
 +++ b/powerline.theme
+@@ -98,7 +98,7 @@ _lp_powerline_theme_prompt() {
+ 
+     __powerline_section "${_POWERLINE_HOST_ICON}${_POWERLINE_HOSTNAME}" "${POWERLINE_HOST_COLOR[@]}"
+ 
+-    __powerline_section "$_POWERLINE_USERNAME" "${POWERLINE_USER_COLOR[@]}"
++    __powerline_section "${POWERLINE_SPACER}${_POWERLINE_USERNAME}" "${POWERLINE_USER_COLOR[@]}"
+ 
+     local lp_python_env
+     if _lp_python_env; then
 @@ -367,7 +367,7 @@ __powerline_end_terminator() {
      local first_section="true"
      __powerline_section_arrow -1
      lp_terminal_format -1
 -    powerline_sections+="${section_arrow}${lp_terminal_format}${POWERLINE_SPACER}"
-+    powerline_sections+="${section_arrow}${lp_terminal_format}${POWERLINE_SPACER}\n\$ "
++    powerline_sections+="${section_arrow}\n${lp_terminal_format}\$${POWERLINE_SPACER}"
  }
-
+ 
  __powerline_section_arrow() {  # _, background_color, _, _, _, fallback_background_color
+@@ -409,7 +409,7 @@ __powerline_path_generate() {
+ 
+     local lp_path_format
+     _lp_path_format "$path_format" "$last_dir_format" "$vcs_format" "$shortened_format" \
+-        "${POWERLINE_SPACER}${POWERLINE_SOFT_DIVIDER}${POWERLINE_SPACER}" "$separator_format"
++        "/" "$separator_format"
+ 
+     _lp_powerline_path=${lp_path_format}
+ }

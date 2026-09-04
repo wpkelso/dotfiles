@@ -1,0 +1,14 @@
+[language-server.perl-lsp]
+command = "perl-lsp"
+root-markers = ["cpanfile", "Makefile.PL", "Build.PL"]
+
+[[language]]
+name = "perl"
+language-id = "perl"
+scope = "source.perl"
+injection-regex = "perl"
+file-types = ["pl", "pm"]
+shebangs = ["sh", "bash", "perl"]
+roots = ["cpanfile", "Makefile.PL", "Build.PL", ".git"]
+auto-format = false
+language-servers = ["perl-lsp"]

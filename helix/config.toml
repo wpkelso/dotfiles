@@ -14,7 +14,7 @@ text-width = 100
 
 bufferline = "always"
 color-modes = true
-popup-border = "menu"
+popup-border = "all"
 line-number = "relative"
 cursorline = false
 cursorcolumn = false
@@ -46,9 +46,9 @@ right = ["spinner", "diagnostics", "spacer", "separator", "position", "position-
 
 separator = ""
 
-mode.normal = "NOR"
-mode.insert = "INS"
-mode.select = "SEL"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 diagnostics = ["info", "warning", "error"]
 workspace-diagnostics = ["warning", "error"]
@@ -108,7 +108,7 @@ min-width = 3
 enable = true
 max-wrap = 20
 max-indent-retain = 40
-wrap-indicator = "↪"
+wrap-indicator = "↪ "
 wrap-at-text-width = false
 
 [editor.smart-tab]
@@ -116,9 +116,9 @@ enable = true
 supersede-menu = true
 
 [editor.inline-diagnostics]
-cursor-line = "disable"
+cursor-line = "hint"
 other-lines = "disable"
-prefix-len = 1
+prefix-len = 2
 max-wrap = 20
 max-diagnostics = 10
 
